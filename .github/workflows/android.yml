@@ -17,10 +17,19 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Check project files
+        run: |
+          echo "Files in repository:"
+          ls -la
+          echo "Searching for Android app modules:"
+          find . -name AndroidManifest.xml -o -name gradlew
 
       - name: Build APK
         run: gradle assembleDebug
@@ -29,5 +38,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CIEL-APK
-          path: app/build/outputs/apk/**/*.apk
+          path: "**/build/outputs/apk/**/*.apk"
           if-no-files-found: error

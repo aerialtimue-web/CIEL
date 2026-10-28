@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ciel-backend
+    runtime: docker
+    rootDir: backend
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: LLM_BASE_URL
+        sync: false
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: gpt-4o-mini
+      - key: CIEL_ACCESS_TOKEN
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /data/ciel.sqlite3
+    disk:
+      name: ciel-data
+      mountPath: /data
+      sizeGB: 1
